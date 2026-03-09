@@ -1,0 +1,15 @@
+{
+  "name": "portfolio-workspace",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npm run dev:stop && concurrently -k -n backend,frontend \"npm --prefix Backend run dev\" \"npm --prefix Frontend run dev\"",
+    "dev:stop": "for p in 8080 5173 5174 5175; do lsof -ti tcp:$p | xargs kill -15 2>/dev/null || true; done",
+    "dev:backend": "npm --prefix Backend run dev",
+    "dev:frontend": "npm --prefix Frontend run dev",
+    "check": "npm --prefix Backend run check && npm --prefix Frontend run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

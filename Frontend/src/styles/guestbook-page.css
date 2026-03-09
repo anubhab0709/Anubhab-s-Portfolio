@@ -1,0 +1,596 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@200;300;400;500&display=swap');
+
+.guestbook-page {
+  min-height: 100vh;
+  position: relative;
+  color: var(--text);
+  padding: 6.7rem 1.2rem 2.4rem;
+  background: radial-gradient(circle at 12% 8%, #1d222e 0%, transparent 34%),
+    radial-gradient(circle at 85% 12%, #24180f 0%, transparent 35%),
+    linear-gradient(180deg, #08090c 0%, #0a0a0a 100%);
+}
+
+.guestbook-page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+  background-image:
+    linear-gradient(rgba(199, 168, 85, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(199, 168, 85, 0.06) 1px, transparent 1px);
+  background-size: 90px 90px;
+}
+
+.guestbook-nav {
+  position: fixed;
+  top: 0.8rem;
+  left: 0.8rem;
+  right: 0.8rem;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.35rem;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(135deg, rgba(18, 18, 18, 0.62) 0%, rgba(10, 10, 10, 0.36) 100%);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.guestbook-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+}
+
+.guestbook-nav-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.guestbook-hamburger,
+.guestbook-mobile-menu {
+  display: none;
+}
+
+.guestbook-mobile-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 190px;
+  gap: 0.38rem;
+  padding: 0.5rem;
+  border: 1px solid var(--line);
+  background: rgba(11, 12, 15, 0.96);
+  border-radius: 10px;
+}
+
+.guestbook-mobile-menu.open {
+  display: grid;
+}
+
+.guestbook-hamburger {
+  border: 1px solid var(--line);
+  background: transparent;
+  width: 40px;
+  height: 40px;
+  padding: 7px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.guestbook-hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  margin: 5px 0;
+  background: var(--accent);
+}
+
+.guestbook-nav-link {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.63rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  padding: 0.42rem 0.72rem;
+  transition: all 0.2s ease;
+}
+
+.guestbook-nav-link:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.guestbook-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.guestbook-tagline {
+  margin: 0;
+  color: var(--accent);
+  font-family: 'DM Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.66rem;
+}
+
+.guestbook-wrap h1 {
+  margin: 0.7rem 0 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 300;
+  line-height: 1.08;
+}
+
+.guestbook-pinned {
+  margin-top: 1.05rem;
+  padding: 1rem;
+  border: 1px solid rgba(199, 168, 85, 0.4);
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(27, 20, 10, 0.5), rgba(13, 13, 13, 0.8));
+}
+
+.pinned-chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(199, 168, 85, 0.56);
+  color: var(--accent);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.6rem;
+  padding: 0.27rem 0.55rem;
+}
+
+.guestbook-pinned p {
+  margin: 0.7rem 0 0;
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 0.94rem;
+}
+
+.guestbook-auth-row {
+  margin-top: 0.95rem;
+}
+
+.guestbook-auth-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.guestbook-auth-option {
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(12, 14, 18, 0.88);
+  color: var(--text);
+  padding: 0.65rem 0.78rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.guestbook-auth-option:hover {
+  border-color: var(--accent);
+  color: var(--accent-soft);
+}
+
+.guestbook-auth-option.google {
+  border-color: rgba(199, 168, 85, 0.42);
+  background: linear-gradient(135deg, rgba(31, 24, 12, 0.58), rgba(13, 13, 13, 0.88));
+}
+
+.google-mark {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.google-mark-logo {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.guestbook-auth-option.manual.active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.guestbook-dev-login {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(10, 10, 10, 0.44);
+  padding: 0.85rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.guestbook-dev-login input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(7, 8, 10, 0.92);
+  color: var(--text);
+  padding: 0.6rem 0.7rem;
+  font-size: 0.88rem;
+  font-family: 'Outfit', sans-serif;
+}
+
+.guestbook-dev-login input:focus {
+  outline: none;
+  border-color: rgba(199, 168, 85, 0.65);
+}
+
+.guestbook-dev-login button {
+  justify-self: start;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--line);
+  background: transparent;
+  padding: 0.48rem 0.72rem;
+  cursor: pointer;
+}
+
+.guestbook-dev-login button:hover {
+  color: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.google-signin-slot {
+  min-height: 44px;
+}
+
+.google-signin-slot-hidden {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.github-login-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--line);
+  background: transparent;
+  padding: 0.58rem 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.github-login-btn:hover {
+  color: var(--accent-soft);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.guestbook-auth-note {
+  margin-top: 0.6rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.guestbook-auth-note code {
+  font-family: 'DM Mono', monospace;
+  color: var(--accent);
+}
+
+.guestbook-user-chip {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(12, 14, 18, 0.88);
+  padding: 0.58rem 0.68rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.62rem;
+}
+
+.guestbook-avatar-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: rgba(199, 168, 85, 0.14);
+  color: var(--accent-soft);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.guestbook-avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.guestbook-user-chip strong {
+  display: block;
+  font-size: 0.9rem;
+}
+
+.guestbook-user-chip span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.75rem;
+  margin-top: 0.1rem;
+}
+
+.guestbook-user-chip button {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  background: transparent;
+  padding: 0.4rem 0.62rem;
+  cursor: pointer;
+}
+
+.guestbook-user-chip button:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.guestbook-form {
+  margin-top: 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.95rem;
+  background: rgba(10, 10, 10, 0.44);
+}
+
+.guestbook-form label {
+  display: block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.63rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+
+.guestbook-form textarea {
+  width: 100%;
+  min-height: 150px;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(7, 8, 10, 0.92);
+  color: var(--text);
+  padding: 0.75rem 0.8rem;
+  line-height: 1.7;
+  font-size: 0.9rem;
+  font-family: 'Outfit', sans-serif;
+}
+
+.guestbook-form textarea:focus {
+  outline: none;
+  border-color: rgba(199, 168, 85, 0.65);
+}
+
+.guestbook-form textarea:disabled {
+  opacity: 0.55;
+}
+
+.guestbook-form-actions {
+  margin-top: 0.55rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.guestbook-form-actions span {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.guestbook-form-actions button {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--line);
+  background: transparent;
+  padding: 0.48rem 0.72rem;
+  cursor: pointer;
+}
+
+.guestbook-form-actions button:hover:not(:disabled) {
+  color: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.guestbook-form-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.guestbook-message-list {
+  margin-top: 0.95rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.guestbook-message-item {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(10, 10, 10, 0.44);
+  padding: 0.7rem 0.78rem;
+}
+
+.guestbook-message-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.45rem;
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.63rem;
+  letter-spacing: 0.06em;
+}
+
+.guestbook-message-item p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.6;
+  font-size: 0.9rem;
+}
+
+.guestbook-message-item textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(7, 8, 10, 0.92);
+  color: var(--text);
+  padding: 0.6rem 0.7rem;
+  line-height: 1.6;
+  font-size: 0.88rem;
+  font-family: 'Outfit', sans-serif;
+}
+
+.guestbook-message-item textarea:focus {
+  outline: none;
+  border-color: rgba(199, 168, 85, 0.65);
+}
+
+.guestbook-message-item footer {
+  margin-top: 0.45rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.63rem;
+  letter-spacing: 0.06em;
+}
+
+.guestbook-message-id {
+  margin-top: 0.2rem;
+  color: var(--accent);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+}
+
+.guestbook-footer-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.guestbook-message-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.guestbook-message-actions button {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  background: transparent;
+  padding: 0.26rem 0.4rem;
+  cursor: pointer;
+}
+
+.guestbook-message-actions button:hover:not(:disabled) {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.guestbook-message-actions button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@media (max-width: 720px) {
+  .guestbook-page {
+    padding-top: 5.8rem;
+  }
+
+  .guestbook-nav {
+    top: 0.5rem;
+    left: 0.5rem;
+    right: 0.5rem;
+    padding: 0.85rem 0.95rem;
+  }
+
+  .guestbook-nav-actions {
+    display: none;
+  }
+
+  .guestbook-hamburger {
+    display: block;
+  }
+
+  .guestbook-mobile-menu .guestbook-nav-link {
+    font-size: 0.6rem;
+    padding: 0.4rem 0.6rem;
+    letter-spacing: 0.11em;
+  }
+
+  .guestbook-user-chip {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .guestbook-auth-split {
+    grid-template-columns: 1fr;
+  }
+
+  .guestbook-form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .guestbook-form-actions button {
+    width: 100%;
+  }
+}
