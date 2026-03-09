@@ -3706,7 +3706,11 @@
   async function handleFormSubmit(e) {
     e.preventDefault();
 
-    const apiBaseUrl = window.__PORTFOLIO_API_BASE__ || 'http://localhost:8080/api/v1';
+    const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const defaultApiBaseUrl = isLocalHost
+      ? 'http://localhost:8080/api/v1'
+      : 'https://anubhab-s-portfolio.onrender.com/api/v1';
+    const apiBaseUrl = window.__PORTFOLIO_API_BASE__ || defaultApiBaseUrl;
     const nameInput = document.getElementById('contact-name');
     const emailInput = document.getElementById('contact-email');
     const subjectInput = document.getElementById('contact-subject');

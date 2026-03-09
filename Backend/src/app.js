@@ -16,6 +16,33 @@ export const app = express();
 
 app.set('trust proxy', 1);
 
+function isAllowedOrigin(origin) {
+  if (!origin) {
+    return true;
+  }
+
+  if (env.CORS_ORIGINS.includes(origin)) {
+    return true;
+  }
+
+  try {
+    const parsed = new URL(origin);
+    const host = parsed.hostname.toLowerCase();
+    if (host === 'localhost' || host === '127.0.0.1') {
+      return true;
+    }
+
+    // Allow Vercel production + preview origins for this app.
+    if (host === 'anubhab-s-portfolio.vercel.app' || host.endsWith('.vercel.app')) {
+      return true;
+    }
+  } catch {
+    return false;
+  }
+
+  return false;
+}
+
 app.use(requestIdMiddleware);
 app.use(
   pinoHttp({
@@ -25,7 +52,13 @@ app.use(
 );
 app.use(
   cors({
-    origin: true,
+    origin(origin, callback) {
+      if (isAllowedOrigin(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Origin not allowed by CORS'));
+      }
+    },
     credentials: false
   })
 );
