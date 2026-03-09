@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { getApiBaseUrl } from '../../utils/apiBaseUrl';
 
 const CHAT_KEY_STORAGE = 'portfolio_openai_api_key';
 const CHAT_SESSION_STORAGE = 'portfolio_chat_session_id';
@@ -9,7 +10,7 @@ const INITIAL_BOT_MESSAGE = {
 };
 
 function Chatbot() {
-	const apiBaseUrl = useMemo(() => import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api/v1', []);
+	const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
 	const [isOpen, setIsOpen] = useState(false);
 	const [inputValue, setInputValue] = useState('');
 	const [isSending, setIsSending] = useState(false);

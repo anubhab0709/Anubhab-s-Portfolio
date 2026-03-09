@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import '../styles/guestbook-page.css';
+import { getApiBaseUrl } from '../utils/apiBaseUrl';
 
 const GUESTBOOK_AUTH_TOKEN_KEY = 'portfolio_guestbook_auth_token_v1';
 const GOOGLE_SCRIPT_SRC = 'https://accounts.google.com/gsi/client';
@@ -122,7 +123,7 @@ function GuestbookPage() {
   const [failedAvatarMap, setFailedAvatarMap] = useState({});
 
   const googleClientId = useMemo(() => import.meta.env.VITE_GOOGLE_CLIENT_ID || '', []);
-  const apiBaseUrl = useMemo(() => import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api/v1', []);
+  const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
   const currentUserAvatarUrl = resolveAvatarUrl(googleUser);
 
   const isAvatarBroken = (url) => Boolean(url && failedAvatarMap[url]);

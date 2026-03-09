@@ -2,9 +2,10 @@ import { useMemo, useState } from 'react';
 import SectionHeader from '../components/common/SectionHeader';
 import { personalInfo } from '../data/portfolioData';
 import { usePortfolioContent } from '../context/contentContext';
+import { getApiBaseUrl } from '../utils/apiBaseUrl';
 
 function Contact() {
-  const apiBaseUrl = useMemo(() => import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api/v1', []);
+  const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
   const { socialLinks, resumes } = usePortfolioContent();
   const [formData, setFormData] = useState({
     name: '',

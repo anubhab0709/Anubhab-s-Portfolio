@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { personalInfo, projects as fallbackProjects } from '../data/portfolioData';
+import { getApiBaseUrl } from '../utils/apiBaseUrl';
 
 const PortfolioContentContext = createContext({
   projects: fallbackProjects,
@@ -10,7 +11,7 @@ const PortfolioContentContext = createContext({
 });
 
 export function PortfolioContentProvider({ children }) {
-  const apiBaseUrl = useMemo(() => import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api/v1', []);
+  const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
   const [projects, setProjects] = useState(fallbackProjects);
   const [socialLinks, setSocialLinks] = useState(personalInfo.socialLinks);
   const [resumes, setResumes] = useState([]);
