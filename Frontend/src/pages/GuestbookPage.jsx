@@ -106,6 +106,7 @@ function decodeGoogleCredential(credential = '') {
 function GuestbookPage() {
   const googleButtonRef = useRef(null);
   const [googleUser, setGoogleUser] = useState(null);
+  const [isGoogleReady, setIsGoogleReady] = useState(false);
   const [authStatus, setAuthStatus] = useState('idle');
   const [authMessage, setAuthMessage] = useState('');
   const [isLoadingMessages, setIsLoadingMessages] = useState(false);
@@ -196,6 +197,7 @@ function GuestbookPage() {
       if (googleButtonRef.current) {
         googleButtonRef.current.innerHTML = '';
       }
+      setIsGoogleReady(false);
       return undefined;
     }
 
@@ -265,10 +267,12 @@ function GuestbookPage() {
           logo_alignment: 'left'
         });
 
+        setIsGoogleReady(true);
         setAuthStatus('idle');
       })
       .catch(() => {
         if (!canceled) {
+          setIsGoogleReady(false);
           setAuthStatus('error');
           setAuthMessage('Unable to load Google Sign-In right now.');
         }
@@ -347,7 +351,12 @@ function GuestbookPage() {
       sessionStorage.setItem('portfolio_guestbook_user_v1', JSON.stringify(nextUser));
       setAuthMessage('Logged in successfully.');
     } catch (error) {
-      setAuthMessage(error.message || 'Unable to login right now.');
+      const errorMessage = error.message || 'Unable to login right now.';
+      if (errorMessage.toLowerCase().includes('disabled')) {
+        setAuthMessage('Manual login is disabled in production. Please use Google Sign-In.');
+      } else {
+        setAuthMessage(errorMessage);
+      }
     }
   };
 
@@ -380,9 +389,20 @@ function GuestbookPage() {
       return;
     }
 
+    if (!window.google?.accounts?.id) {
+      setAuthMessage('Google Sign-In is still initializing. Please wait a few seconds and try again.');
+      return;
+    }
+
     const googleButton = googleButtonRef.current?.querySelector('div[role="button"]');
     if (googleButton instanceof HTMLElement) {
       googleButton.click();
+      return;
+    }
+
+    if (window.google.accounts.id.prompt) {
+      window.google.accounts.id.prompt();
+      setAuthMessage('If no Google popup appears, allow popups and try again.');
       return;
     }
 
@@ -608,6 +628,10 @@ function GuestbookPage() {
 
               {!googleClientId ? (
                 <p className="guestbook-auth-note">Google OAuth is not configured. Use manual login.</p>
+              ) : null}
+
+              {googleClientId && !isGoogleReady ? (
+                <p className="guestbook-auth-note">Google Sign-In is initializing...</p>
               ) : null}
 
               <div className="google-signin-slot-hidden" ref={googleButtonRef} aria-hidden="true" />
