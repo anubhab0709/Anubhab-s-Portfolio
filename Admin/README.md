@@ -1,4 +1,4 @@
-# Portfolio Admin (Pure React)
+# Portfolio Admin
 
 React admin panel for managing portfolio content and moderation tasks.
 
